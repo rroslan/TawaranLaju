@@ -16,17 +16,17 @@ import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
-    //FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
     }
     @Override
     protected void onStart() {
         super.onStart();
-        //FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
             // already signed in
             Intent intent = new Intent(MainActivity.this, CustomerActivity.class);
             startActivity(intent);
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                             .setIsSmartLockEnabled(!BuildConfig.DEBUG)
                             .setAvailableProviders(
                                     Collections.singletonList(
-                                            new AuthUI.IdpConfig.PhoneBuilder().build()
+                                            new AuthUI.IdpConfig.PhoneBuilder().setDefaultCountryIso("my").build()
                                     )
                             )
                             .build(),
@@ -53,10 +53,11 @@ public class MainActivity extends AppCompatActivity {
         // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                //FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                String user_Id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(user_Id);
-                current_user_db.setValue(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                String user_id = mAuth.getCurrentUser().getUid();
+                //String user_phone = mAuth.getCurrentUser().getPhoneNumber();
+                DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(user_id);
+                current_user_db.setValue(true);
 
                 Intent intent = new Intent(MainActivity.this, CustomerActivity.class);
                 startActivity(intent);
