@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                String user_id = mAuth.getCurrentUser().getUid();
+                String user_id = mAuth.getCurrentUser().getPhoneNumber();
                 //String user_phone = mAuth.getCurrentUser().getPhoneNumber();
                 DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(user_id);
                 current_user_db.setValue(true);
