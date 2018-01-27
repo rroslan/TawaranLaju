@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Collections;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null) {
             // already signed in
-            Intent intent = new Intent(MainActivity.this, CustomerActivity.class);
+            Intent intent = new Intent(MainActivity.this, CustomerMapsActivity.class);
             startActivity(intent);
             finish();
         } else {
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                String uid = mAuth.getCurrentUser().getUid();
                 String user_id = mAuth.getCurrentUser().getPhoneNumber();
                 //String user_phone = mAuth.getCurrentUser().getPhoneNumber();
                 DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(user_id);
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                Intent intent = new Intent(MainActivity.this, CustomerActivity.class);
+                Intent intent = new Intent(MainActivity.this, CustomerMapsActivity.class);
                 startActivity(intent);
                 finish();
                 return;

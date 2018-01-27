@@ -3,11 +3,11 @@ package biz.eastservices.tawaranlaju;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class CustomerActivity extends AppCompatActivity {
+public class CustomerSettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer);
+        setContentView(R.layout.activity_customer_settings);
     }
 }
